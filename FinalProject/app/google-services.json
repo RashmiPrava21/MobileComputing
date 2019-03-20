@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "136585839746",
+    "firebase_url": "https://mobilecomputingproject-2091d.firebaseio.com",
+    "project_id": "mobilecomputingproject-2091d",
+    "storage_bucket": "mobilecomputingproject-2091d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136585839746:android:741753241fbd9f7b",
+        "android_client_info": {
+          "package_name": "com.example.loginpage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136585839746-6t6e3kun1ef3v7cmi3lvkie5lvo1tjv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR_paIGx1QBv-et8MqLUklPUPF0ICP8tk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
