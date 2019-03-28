@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainPage extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private Button gyroLiveData;
     private Button logout;
 
     @Override
@@ -20,7 +21,15 @@ public class MainPage extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        gyroLiveData = (Button) findViewById(R.id.gyroLiveData);
         logout = (Button)findViewById(R.id.logoutButton);
+
+        gyroLiveData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainPage.this, GyroData.class));
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
