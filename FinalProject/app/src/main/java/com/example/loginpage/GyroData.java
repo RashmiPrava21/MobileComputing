@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class GyroData extends AppCompatActivity
@@ -32,6 +34,10 @@ public class GyroData extends AppCompatActivity
     private Float gyroZ = (float) 0.0;
 
     private long lastTimeStamp = 0;
+
+    Calendar c2 = Calendar.getInstance();
+    SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+    String dateString1 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,27 +74,15 @@ public class GyroData extends AppCompatActivity
                 this.gyroX = event.values[0];
                 this.gyroY = event.values[1];
                 this.gyroZ = event.values[2];
-                if(Math.round(this.gyroX) == 0 && Math.round(this.gyroY) == 0 && Math.round(this.gyroZ) == 0) {
-                    //device didn't move - store current timestamp
-                    lastTimeStamp = event.timestamp;
-                } else {
-                    //below if condition is to check if device hasn't been idle
-                    if (lastTimeStamp == 0) {
-                        return;
-                    }
 
-                    //(3 * 60 * 60 * 1000) checks if device wasn't moved for more than 3 hours
-                    if ((event.timestamp - lastTimeStamp) > (3 * 60 * 60 * 1000)) {
-                        TimeTask myTimeTask = new TimeTask(timeStamp);
-                        myHandler_.post(myTimeTask);
-                    }
-                    lastTimeStamp = 0;
-                }
+                // dateString1 = sdf1.format(c2.getTime());
             }
 
-            // datapresentGyro = true;
-            GyroTask myTask = new GyroTask(gyroX, gyroY, gyroZ);
+            GyroTask myTask = new GyroTask(gyroX, gyroY, gyroZ, dateString1);
             myHandler_.post(myTask);
+
+//            TimeTask myTimeTask = new TimeTask(dateString1);
+//            myHandler_.post(myTimeTask);
         }
     }
 
@@ -106,31 +100,43 @@ public class GyroData extends AppCompatActivity
         }
     }
 
-    public class TimeTask implements Runnable {
-
-        private EditText currentTimeStamp;
-        private TimeTask(EditText timeStamp_) {
-            this.currentTimeStamp = timeStamp_;
-        }
-        @Override
-        public void run() {
-            timeStamp.setText(currentTimeStamp.getText().toString());
-        }
-    }
+//    public class TimeTask implements Runnable {
+//
+//        private String currentTimeStamp;
+//        private TimeTask(String timeStamp_) {
+//            this.currentTimeStamp = timeStamp_;
+//        }
+//        @Override
+//        public void run() {
+//            timeStamp.setText(currentTimeStamp);
+//        }
+//    }
 
     public class GyroTask implements Runnable {
 
         private float gyroX, gyroY, gyroZ;
-        public GyroTask(float gyroX_, float gyroY_, float gyroZ_) {
+        private String currentTimeStamp;
+
+        public GyroTask(float gyroX_, float gyroY_, float gyroZ_, String timeStamp_) {
             this.gyroX = gyroX_;
             this.gyroY = gyroY_;
             this.gyroZ = gyroZ_;
+//            this.currentTimeStamp = timeStamp_;
+            timeStamp_ = sdf1.format(c2.getTime());
+            this.currentTimeStamp = timeStamp_;
         }
+
+
+
         @Override
         public void run() {
             sensorGyroX.setText(new Float(gyroX).toString());
             sensorGyroY.setText(new Float(gyroY).toString());
             sensorGyroZ.setText(new Float(gyroZ).toString());
+            // dateString1 = sdf1.format(c2.getTime());
+            timeStamp.setText(currentTimeStamp);
         }
+
+
     }
 }
