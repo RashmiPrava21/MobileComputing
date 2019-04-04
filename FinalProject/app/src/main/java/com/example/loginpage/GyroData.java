@@ -21,6 +21,7 @@ public class GyroData extends AppCompatActivity
     private Handler myHandler_;
     private static final String TAG = MainActivity.class.getSimpleName();
     private EditText sensorGyroX, sensorGyroY, sensorGyroZ;
+    private EditText timeStamp;
 
     private SensorManager sensorManager_;
     private Sensor gyroscope;
@@ -30,7 +31,7 @@ public class GyroData extends AppCompatActivity
     private Float gyroY = (float) 0.0;
     private Float gyroZ = (float) 0.0;
 
-    private String currentDateTimeString; // = DateFormat.getDateTimeInstance().format(new Date());
+    private long lastTimeStamp = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,8 @@ public class GyroData extends AppCompatActivity
         sensorGyroY = findViewById(R.id.sensorGyroY);
         sensorGyroZ = findViewById(R.id.sensorGyroZ);
 
-        currentDateTimeString = findViewById(R.id.timeStamp);
+        // TimeStamp
+        timeStamp = findViewById(R.id.timeStamp);
 
         // Button
         Button convertButton = findViewById(R.id.CollectData);
@@ -60,11 +62,28 @@ public class GyroData extends AppCompatActivity
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
         if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             if (event.values[0] != 0.0 || event.values[1] != 0.0 || event.values[2] != 0.0) {
                 this.gyroX = event.values[0];
                 this.gyroY = event.values[1];
                 this.gyroZ = event.values[2];
+                if(Math.round(this.gyroX) == 0 && Math.round(this.gyroY) == 0 && Math.round(this.gyroZ) == 0) {
+                    //device didn't move - store current timestamp
+                    lastTimeStamp = event.timestamp;
+                } else {
+                    //below if condition is to check if device hasn't been idle
+                    if (lastTimeStamp == 0) {
+                        return;
+                    }
+
+                    //(3 * 60 * 60 * 1000) checks if device wasn't moved for more than 3 hours
+                    if ((event.timestamp - lastTimeStamp) > (3 * 60 * 60 * 1000)) {
+                        TimeTask myTimeTask = new TimeTask(timeStamp);
+                        myHandler_.post(myTimeTask);
+                    }
+                    lastTimeStamp = 0;
+                }
             }
 
             // datapresentGyro = true;
@@ -84,6 +103,18 @@ public class GyroData extends AppCompatActivity
             case R.id.CollectData:
                 sensorManager_.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
                 break;
+        }
+    }
+
+    public class TimeTask implements Runnable {
+
+        private EditText currentTimeStamp;
+        private TimeTask(EditText timeStamp_) {
+            this.currentTimeStamp = timeStamp_;
+        }
+        @Override
+        public void run() {
+            timeStamp.setText(currentTimeStamp.getText().toString());
         }
     }
 
