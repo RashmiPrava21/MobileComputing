@@ -122,7 +122,7 @@ public class GyroData extends AppCompatActivity
             this.gyroY = gyroY_;
             this.gyroZ = gyroZ_;
 //            this.currentTimeStamp = timeStamp_;
-            timeStamp_ = sdf1.format(c2.getTime());
+            timeStamp_ = sdf1.format(System.currentTimeMillis());
             this.currentTimeStamp = timeStamp_;
         }
 
