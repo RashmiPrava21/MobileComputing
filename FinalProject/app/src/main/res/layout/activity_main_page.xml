@@ -7,7 +7,7 @@
     tools:context="com.example.loginpage.MainPage">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/register_link"
         android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:layout_marginStart="8dp"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/register_link"
         app:layout_constraintVertical_bias="0.415" />
 
     <Button

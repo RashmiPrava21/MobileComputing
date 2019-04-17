@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,13 +34,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        try
+        {
+            this.getSupportActionBar().hide();
+
+        }
+        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_main);
 
-        name = (EditText)findViewById(R.id.nameID);
-        password = (EditText)findViewById(R.id.pswdID);
-        attempts = (TextView) findViewById(R.id.attemptID);
-        login = (Button) findViewById(R.id.buttonID1);
-        userRegister = (TextView)findViewById(R.id.registerID);
+        name = findViewById(R.id.user);
+        password = findViewById(R.id.password);
+        attempts = findViewById(R.id.attemptID);
+        login = findViewById(R.id.login_button);
+        userRegister = findViewById(R.id.register_link);
 
         attempts.setText("Remaining Attempts: 5");
 
@@ -54,10 +67,14 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateUser(name.getText().toString(), password.getText().toString());
-
+                if (name.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter a valid email.", Toast.LENGTH_SHORT).show();
+                } else {
+                    validateUser(name.getText().toString(), password.getText().toString());
+                }
             }
         });
+
 
         userRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void validateUser(String username, String password){
 
-        progressDialog.setMessage("Successfully executed!!");
-        progressDialog.show();
+//        if (username.isEmpty()) {
+//            Toast.makeText(MainActivity.this, "Please enter a valid email.", Toast.LENGTH_SHORT);
+//            return;
+//        }
 
         firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
