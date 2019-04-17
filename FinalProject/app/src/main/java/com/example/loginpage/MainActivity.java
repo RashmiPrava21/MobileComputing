@@ -75,22 +75,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         userRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
-
     }
 
     private void validateUser(String username, String password){
-
-//        if (username.isEmpty()) {
-//            Toast.makeText(MainActivity.this, "Please enter a valid email.", Toast.LENGTH_SHORT);
-//            return;
-//        }
 
         firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
