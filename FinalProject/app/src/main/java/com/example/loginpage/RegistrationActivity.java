@@ -39,7 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_registration);
 
         setupUI();
 
