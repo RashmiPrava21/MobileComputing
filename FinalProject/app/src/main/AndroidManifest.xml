@@ -12,6 +12,9 @@
         <activity android:name=".GyroData"></activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainPage" />
+        <activity android:name=".HomePage" />
+        <activity android:name=".LineActivity" />
+        <activity android:name=".BarChartActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

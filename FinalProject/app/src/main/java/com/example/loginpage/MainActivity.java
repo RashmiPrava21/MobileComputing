@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(firebaseUser != null){
             finish();
-            startActivity(new Intent(MainActivity.this, MainPage.class));
+            startActivity(new Intent(MainActivity.this, HomePage.class));
         }
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT);
-                    startActivity(new Intent(MainActivity.this, MainPage.class));
+                    startActivity(new Intent(MainActivity.this, HomePage.class));
                 }else{
                     Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                     countAttempts--;
