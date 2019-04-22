@@ -1,4 +1,4 @@
-package com.example.wmapp;
+package com.example.loginpage;
 
 import org.junit.Test;
 

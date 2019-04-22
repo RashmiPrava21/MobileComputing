@@ -1,4 +1,4 @@
-package com.example.wmapp;
+package com.example.loginpage;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,7 +21,7 @@ import com.google.android.gms.wearable.Wearable;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
+public class MobileConnection extends AppCompatActivity {
 
     Button talkbutton;
     TextView textview;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mobile_connection);
         talkbutton = findViewById(R.id.talkButton);
         textview = findViewById(R.id.textView);
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
 //Send the message//
 
-                            Wearable.getMessageClient(MainActivity.this).sendMessage(node.getId(), path, message.getBytes());
+                            Wearable.getMessageClient(MobileConnection.this).sendMessage(node.getId(), path, message.getBytes());
 
                     try {
 

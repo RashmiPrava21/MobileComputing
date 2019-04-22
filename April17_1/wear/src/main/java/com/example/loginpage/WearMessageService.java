@@ -1,9 +1,6 @@
-package com.example.wmapp;
+package com.example.loginpage;
 
-import android.app.Service;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.android.gms.wearable.MessageEvent;
