@@ -34,7 +34,7 @@ public class MobileConnection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mobile_connection);
         talkbutton = findViewById(R.id.talkButton);
-        textview = findViewById(R.id.textView);
+        textview = findViewById(R.id.connectingToWatch);
 
         //Create a message handler//
 
