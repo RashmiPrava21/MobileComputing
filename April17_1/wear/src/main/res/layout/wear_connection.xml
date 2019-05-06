@@ -5,24 +5,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_page_background_official"
+    android:theme="@android:style/Theme.Black.NoTitleBar"
     tools:context=".WearConnection"
     tools:deviceIds="wear">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/wearContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/talkClick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Talk to the handheld"/>
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:id="@+id/connectivityNotification"
+            android:layout_width="273dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.626"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.064" />
+
+        <Button
+            android:id="@+id/startSleep"
+            android:layout_width="109dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/navigation_bottom_color"
+            android:text="Start"
+            android:textColor="#F5FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/connectivityNotification"
+            tools:ignore="MissingConstraints" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.wear.widget.BoxInsetLayout>
+
+
+    <!--android:layout_width="wrap_content"
+    android:layout_height="wrap_content"-->
