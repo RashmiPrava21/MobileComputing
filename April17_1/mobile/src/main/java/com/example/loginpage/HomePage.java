@@ -106,20 +106,20 @@ public class HomePage extends AppCompatActivity implements Serializable {
         }
     }
 
-    public void sendmessage(String messageText) {
+    /*public void sendmessage(String messageText) {
         Bundle bundle = new Bundle();
         bundle.putString("messageText", messageText);
         Message msg = myHandler.obtainMessage();
         msg.setData(bundle);
         myHandler.sendMessage(msg);
 
-    }
+    }*/
 
-    public class ConnectedHandler implements Runnable{
+    /*public class ConnectedHandler implements Runnable{
         public void run(){
             Toast.makeText(getApplicationContext(), "Connected to Wearable Device!", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     class NewThread extends Thread {
         String path;
