@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_sleep"
+        android:icon="@drawable/moon_icon_navigation_new"
+        android:title="Sleep"/>
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="Dashboard"/>
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="Account"/>
+
+</menu>
