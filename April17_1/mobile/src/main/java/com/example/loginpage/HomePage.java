@@ -47,6 +47,8 @@ public class HomePage extends AppCompatActivity implements Serializable {
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
+                    Intent intent = new Intent(getApplicationContext(), AccountPage.class);
+                    startActivity(intent);
                     return true;
             }
             return false;

@@ -27,7 +27,6 @@ public class BottomNavigation extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.nav_sleep:
-                            selectedFragment = new HomePage();
                             break;
                         case R.id.nav_dashboard:
                             selectedFragment = new DashboardPage();
