@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(firebaseUser != null){
             finish();
-            startActivity(new Intent(MainActivity.this, HomePage.class));
+//            startActivity(new Intent(MainActivity.this, HomePage.class));
+            startActivity(new Intent(MainActivity.this, BottomNavigation.class));
         }
 
         login.setOnClickListener(new View.OnClickListener() {

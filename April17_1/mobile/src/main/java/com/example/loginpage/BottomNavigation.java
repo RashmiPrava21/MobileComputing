@@ -1,5 +1,6 @@
 package com.example.loginpage;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ public class BottomNavigation extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.nav_sleep:
+                            selectedFragment = new SleepPage();
                             break;
                         case R.id.nav_dashboard:
                             selectedFragment = new DashboardPage();

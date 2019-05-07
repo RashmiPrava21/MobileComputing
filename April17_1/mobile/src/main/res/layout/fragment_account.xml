@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/home_page_background_official"
     android:orientation="vertical"
-    tools:context=".AccountPage">
+
+    tools:context=".MainActivity">
 
     <RelativeLayout
 
@@ -46,7 +47,7 @@
             android:layout_marginTop="275dp">
 
             <LinearLayout
-                android:background="@drawable/home_page_background_official"
+                android:background="@drawable/backgroundfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -127,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Account"
+                android:text="Profile"
                 android:textColor="@color/cardview_light_background"/>
         </LinearLayout>
 
@@ -179,7 +180,7 @@
         android:layout_marginTop="35dp"
         android:layout_marginLeft="120dp"
         android:layout_marginRight="120dp"
-        android:id="@+id/button"
+        android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log Out" />
