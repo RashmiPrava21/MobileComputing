@@ -10,8 +10,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.wearable.activity.WearableActivity;
+import android.support.wearable.view.WearableListView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +22,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.Wearable;
 
 import com.google.android.gms.wearable.Node;
@@ -41,6 +48,7 @@ public class WearConnection extends WearableActivity
         implements View.OnClickListener, SensorEventListener, Serializable {
 
     private Handler myHandler_;
+    private GoogleApiClient mGoogleApiClient;
 
     private TextView mTextView;
     private Button startButton;
@@ -73,6 +81,7 @@ public class WearConnection extends WearableActivity
         setContentView(R.layout.wear_connection);
 
         myHandler_ = new Handler();
+        initGoogleApiClient();
 
         mTextView = (TextView) findViewById(R.id.connectivityNotification);
         startButton = (Button) findViewById(R.id.startSleep);
@@ -91,7 +100,13 @@ public class WearConnection extends WearableActivity
             @Override
             public void onClick(View v) {
                 sensorManager_.unregisterListener(WearConnection.this);
+                Toast.makeText(getApplicationContext(), "Stopping!!", Toast.LENGTH_SHORT).show();
                 Log.d("RMS array values", "array:" + newRMSMilliValues);
+
+                //Use the same path to send data//
+
+//                String datapath = "/my_path";
+//                new SendMessage(datapath, newRMSMilliValues).start();
             }
         });
 
@@ -124,6 +139,18 @@ public class WearConnection extends WearableActivity
         setAmbientEnabled();
 
 
+    }
+
+    /**
+     * Initialize the Google API client which will be used to request the location.
+     */
+    private void initGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(WearConnection.this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -163,8 +190,10 @@ public class WearConnection extends WearableActivity
         switch(v.getId()) {
             case R.id.startSleep:
                 sensorManager_.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-                Toast.makeText(getApplicationContext(), "Starting", Toast.LENGTH_LONG).show();
-                startButton.setClickable(false);
+                if(buttonStatus){
+                    startButton.setClickable(false);
+                    Toast.makeText(getApplicationContext(), "Starting!!", Toast.LENGTH_SHORT).show();
+                }
                 // sensorManager_.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
 //                Intent intent = new Intent(WearConnection.this, StopSleep.class);
 //                startActivity(intent);
@@ -172,14 +201,44 @@ public class WearConnection extends WearableActivity
         }
     }
 
-    public class StartStopButton implements  Runnable {
+    @Override
+    public void onClick(WearableListView.ViewHolder view) {
+
+    }
+
+    @Override
+    public void onTopEmptyRegionClick() {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onDataChanged(DataEventBuffer dataEventBuffer) {
+
+    }
+
+    /*public class StartStopButton implements  Runnable {
         @Override
         public void run() {
             startButton.setOnClickListener((View.OnClickListener) this);
             Intent intent = new Intent(WearConnection.this, StopSleep.class);
             startActivity(intent);
         }
-    }
+    }*/
 
     public class UpdateArray implements  Runnable{
 
@@ -205,20 +264,24 @@ public class WearConnection extends WearableActivity
     public class Receiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent){
-            String onMessageReceived = "Just received a message from handheld";
-            mTextView.setText(onMessageReceived);
+//            String onMessageReceived = "Just received a message from handheld";
+//            mTextView.setText(onMessageReceived);
+            Toast.makeText(getApplicationContext(), "Connection Successful, Please start!", Toast.LENGTH_SHORT).show();
 //            startButton.setClickable(true);
             buttonStatus = true;
         }
     }
 
-   /* class SendMessage extends Thread {
+    /*class SendMessage extends Thread {
         String path;
-        String message;
+//        String message;
+        ArrayList<List<Object>> sendArrayData = new ArrayList<List<Object>>();
+        byte[][] arrayResult = new byte[sendArrayData.size()][2];
         //Constructor for sending information to the Data Layer//
-        SendMessage(String p, String m) {
-            path = p;
-            message = m;
+        SendMessage(String path_, ArrayList<List<Object>> sendArrayData_) {
+            this.path = path_;
+//            message = m;
+            this.sendArrayData = sendArrayData_;
         }
 
         public void run() {
@@ -229,9 +292,11 @@ public class WearConnection extends WearableActivity
                 //Block on a task and get the result synchronously//
                 List<Node> nodes = Tasks.await(nodeListTask);
                 for (Node node : nodes) {
-                    //Send the message///
+                    //Send the message//
+
+//                    Task<ArrayList<List<Object>>> data = Wearable.getMessageClient(WearConnection.this).sendMessage(node.getId(), path, sendArrayData);
                     Task<Integer> sendMessageTask =
-                            Wearable.getMessageClient(WearConnection.this).sendMessage(node.getId(), path, message.getBytes());
+                            Wearable.getMessageClient(WearConnection.this).sendMessage(node.getId(), path,  );
                     try {
                         Integer result = Tasks.await(sendMessageTask);
                         //Handle the errors//
