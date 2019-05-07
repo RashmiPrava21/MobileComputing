@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -27,11 +28,21 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.gms.wearable.DataApi;
+<<<<<<< HEAD
 import com.google.android.gms.wearable.DataEventBuffer;
+=======
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
 import com.google.android.gms.wearable.Wearable;
 
 import com.google.android.gms.wearable.Node;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,10 +56,12 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 public class WearConnection extends WearableActivity
-        implements View.OnClickListener, SensorEventListener, Serializable {
+        implements View.OnClickListener, SensorEventListener, Serializable /*GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks*/ {
 
     private Handler myHandler_;
     private GoogleApiClient mGoogleApiClient;
+
+    GoogleApiClient googleApiClient;
 
     private TextView mTextView;
     private Button startButton;
@@ -67,9 +80,11 @@ public class WearConnection extends WearableActivity
     private Float accXwoG = (float) 0.0;
     private Float accYwoG = (float) 0.0;
     private Float accZwoG = (float) 0.0;
+    String PATH="/sendreceive";
 
     Formatter fmt = new Formatter();
     ArrayList<List<Object>> newRMSMilliValues = new ArrayList<List<Object>>();
+
 
 //    Button talkButton;
 //    int receivedMessageNumber = 1;
@@ -82,6 +97,14 @@ public class WearConnection extends WearableActivity
 
         myHandler_ = new Handler();
         initGoogleApiClient();
+
+        /*googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Wearable.API)
+                .build();
+
+        googleApiClient.connect();*/
 
         mTextView = (TextView) findViewById(R.id.connectivityNotification);
         startButton = (Button) findViewById(R.id.startSleep);
@@ -102,11 +125,20 @@ public class WearConnection extends WearableActivity
                 sensorManager_.unregisterListener(WearConnection.this);
                 Toast.makeText(getApplicationContext(), "Stopping!!", Toast.LENGTH_SHORT).show();
                 Log.d("RMS array values", "array:" + newRMSMilliValues);
+<<<<<<< HEAD
 
                 //Use the same path to send data//
 
 //                String datapath = "/my_path";
 //                new SendMessage(datapath, newRMSMilliValues).start();
+=======
+                /*SendMessage sendMessage_ = new SendMessage("/my_path", newRMSMilliValues);
+                myHandler_.post(sendMessage_);*/
+                // new SendMessage("/my_path", newRMSMilliValues).start();
+                SendMessage sendMessage_ = new SendMessage("/my_path", newRMSMilliValues);
+                Thread thread = new Thread(sendMessage_);
+                thread.start();
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
             }
         });
 
@@ -133,14 +165,11 @@ public class WearConnection extends WearableActivity
         Receiver messageReceiver = new Receiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, newFilter);
 
-
-
         // Enables Always-on
         setAmbientEnabled();
-
-
     }
 
+<<<<<<< HEAD
     /**
      * Initialize the Google API client which will be used to request the location.
      */
@@ -152,6 +181,21 @@ public class WearConnection extends WearableActivity
                 .build();
         mGoogleApiClient.connect();
     }
+=======
+    /*private void sendMessage() {
+        if(googleApiClient.isConnected()) {
+            new Thread( new Runnable() {
+                @Override
+                public void run() {
+                    NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes( googleApiClient ).await();
+                    for(Node node : nodes.getNodes()) {
+                        Wearable.MessageApi.sendMessage(googleApiClient, node.getId(), PATH, null).await();
+                    }
+                }
+            }).start();
+        }
+    }*/
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -201,6 +245,7 @@ public class WearConnection extends WearableActivity
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void onClick(WearableListView.ViewHolder view) {
 
@@ -208,15 +253,45 @@ public class WearConnection extends WearableActivity
 
     @Override
     public void onTopEmptyRegionClick() {
-
-    }
-
-    @Override
+=======
+    /*@Override
     public void onConnected(@Nullable Bundle bundle) {
+        final PutDataMapRequest putRequest = PutDataMapRequest.create("/my_path");
+        final DataMap map = putRequest.getDataMap();
+        int startIndex = 1;
+
+        for(int index = 0; index < newRMSMilliValues.size(); index++){
+            List<Object> temp = newRMSMilliValues.get(index);
+            String str = temp.get(0) + "," + temp.get(1);
+            map.putInt(str, startIndex);
+            startIndex++;
+        }
+
+        Wearable.DataApi.putDataItem(googleApiClient, putRequest.asPutDataRequest());
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
 
     }
 
     @Override
+<<<<<<< HEAD
+    public void onConnected(@Nullable Bundle bundle) {
+=======
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }*/
+
+    /*@Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
+
+    }
+
+    @Override
+<<<<<<< HEAD
     public void onConnectionSuspended(int i) {
 
     }
@@ -232,6 +307,58 @@ public class WearConnection extends WearableActivity
     }
 
     /*public class StartStopButton implements  Runnable {
+=======
+    public void onConnected(@Nullable Bundle bundle) {
+
+        String[] stringRMSData = new String[newRMSMilliValues.size()];
+        int startIndex = 0;
+        List<Object> temp = new ArrayList<>();
+
+        for(int index = 0; index < stringRMSData.length; index++){
+            temp = newRMSMilliValues.get(index);
+            String str = temp.get(0) + "," + temp.get(1);
+            stringRMSData[startIndex] = str;
+            startIndex++;
+        }
+        new DataTask (getApplicationContext(), stringRMSData).execute();
+    }
+
+    class DataTask  extends AsyncTask<Node, Void, Void> {
+
+        private final String[] contents;
+        // private MyListener myListener;
+        Context c;
+
+        public DataTask (Context c, String [] contents) {
+            this.c = c;
+            this.contents = contents;
+            // this.myListener = myListener;
+        }
+
+        @Override
+        protected Void doInBackground(Node... nodes) {
+
+            PutDataMapRequest dataMap = PutDataMapRequest.create ("/myapp/myevent");
+            dataMap.getDataMap().putStringArray("contents", contents);
+
+            PutDataRequest request = dataMap.asPutDataRequest();
+
+            DataApi.DataItemResult dataItemResult = Wearable.DataApi
+                    .putDataItem(googleApiClient, request).await();
+
+
+            Log.d ("Data sent in background", "/myapp/myevent"+getStatus());
+            return null;
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }*/
+
+    public class StartStopButton implements  Runnable {
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
         @Override
         public void run() {
             startButton.setOnClickListener((View.OnClickListener) this);
@@ -272,6 +399,7 @@ public class WearConnection extends WearableActivity
         }
     }
 
+<<<<<<< HEAD
     /*class SendMessage extends Thread {
         String path;
 //        String message;
@@ -282,6 +410,18 @@ public class WearConnection extends WearableActivity
             this.path = path_;
 //            message = m;
             this.sendArrayData = sendArrayData_;
+=======
+    class SendMessage extends Thread {
+        String path;
+//        String message;
+        ArrayList<List<Object>> sendRMSData = new ArrayList<List<Object>>();
+        //Constructor for sending information to the Data Layer//
+        SendMessage(String p, ArrayList<List<Object>> sendRMSData_) {
+            path = p;
+//            message = m;
+            this.sendRMSData = sendRMSData_;
+            Log.d("Inside Constructor", "Test1");
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
         }
 
         public void run() {
@@ -292,11 +432,22 @@ public class WearConnection extends WearableActivity
                 //Block on a task and get the result synchronously//
                 List<Node> nodes = Tasks.await(nodeListTask);
                 for (Node node : nodes) {
+<<<<<<< HEAD
                     //Send the message//
 
 //                    Task<ArrayList<List<Object>>> data = Wearable.getMessageClient(WearConnection.this).sendMessage(node.getId(), path, sendArrayData);
                     Task<Integer> sendMessageTask =
                             Wearable.getMessageClient(WearConnection.this).sendMessage(node.getId(), path,  );
+=======
+                    //Send the message///
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    ObjectOutputStream oos = new ObjectOutputStream(bos);
+                    oos.writeObject(sendRMSData);
+                    byte[] bytes = bos.toByteArray();
+                    Task<Integer> sendMessageTask =
+                            Wearable.getMessageClient(WearConnection.this).sendMessage(node.getId(), path, bytes);
+                    Log.d("After sending data", "Test3");
+>>>>>>> 3d90798dad97c90cbe7ffa60c76160328037c097
                     try {
                         Integer result = Tasks.await(sendMessageTask);
                         //Handle the errors//
@@ -310,7 +461,9 @@ public class WearConnection extends WearableActivity
                 //TO DO//
             } catch (InterruptedException exception) {
                 //TO DO//
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-    }*/
+    }
 }
