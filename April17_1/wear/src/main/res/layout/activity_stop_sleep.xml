@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_box="all"
+    tools:context=".StopSleep"
+    tools:deviceIds="wear_round">
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="beginCountdown" />
+    <android.support.wearable.view.DelayedConfirmationView
+        android:id="@+id/delayedView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:circle_border_color="@color/green"
+        app:circle_border_width="20dp"
+        app:circle_color="@color/white"
+        app:circle_radius="60dp"
+        app:circle_radius_pressed="60dp"
+        app:circle_padding="16dp"
+        app:update_interval="100"/>
+</FrameLayout>

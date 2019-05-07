@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
-        <activity android:name=".StartSleep"></activity>
+        <activity android:name=".StopSleep"></activity>
+        <activity android:name=".StartSleep" />
 
         <service
             android:name=".WearMessageService"
