@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -58,8 +60,11 @@ public class RegistrationActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if(task.isSuccessful()){
-                                Toast.makeText(RegistrationActivity.this, "New Registration Successful", Toast.LENGTH_SHORT).show();
+                                String userID = firebaseAuth.getCurrentUser().getUid();
+                                DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                                userReference.setValue(true);
                                 startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                Toast.makeText(RegistrationActivity.this, "New Registration Successful", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(RegistrationActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                             }

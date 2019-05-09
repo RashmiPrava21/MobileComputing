@@ -9,7 +9,7 @@
     tools:context=".SleepPage">
 
     <Button
-        android:id="@+id/homeButton"
+        android:id="@+id/statisticsButton"
         android:layout_width="228dp"
         android:layout_height="59dp"
         android:layout_marginStart="8dp"
