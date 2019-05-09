@@ -47,12 +47,10 @@ public class MobileConnection extends AppCompatActivity {
             }
         });
 
-//Register to receive local broadcasts, which we'll be creating in the next step//
-
+        //Register to receive local broadcasts, which we'll be creating in the next step//
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         Receiver messageReceiver = new Receiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, messageFilter);
-
     }
 
     public void messageText(String newinfo) {
@@ -61,19 +59,15 @@ public class MobileConnection extends AppCompatActivity {
         }
     }
 
-//Define a nested class that extends BroadcastReceiver//
-
+    //Define a nested class that extends BroadcastReceiver//
     public class Receiver extends BroadcastReceiver {
         @Override
 
         public void onReceive(Context context, Intent intent) {
 
-//Upon receiving each message from the wearable, display the following text//
-
+            //Upon receiving each message from the wearable, display the following text//
             String message = "I just received a message from the wearable " + receivedMessageNumber++;;
-
             textview.setText(message);
-
         }
     }
 
@@ -81,29 +75,24 @@ public class MobileConnection extends AppCompatActivity {
         String message = "Sending message.... ";
         textview.setText(message);
 
-//Sending a message can block the main UI thread, so use a new thread//
-
+        //Sending a message can block the main UI thread, so use a new thread//
         new NewThread("/my_path", message).start();
-
     }
 
-//Use a Bundle to encapsulate our message//
-
+    //Use a Bundle to encapsulate our message//
     public void sendmessage(String messageText) {
         Bundle bundle = new Bundle();
         bundle.putString("messageText", messageText);
         Message msg = myHandler.obtainMessage();
         msg.setData(bundle);
         myHandler.sendMessage(msg);
-
     }
 
     class NewThread extends Thread {
         String path;
         String message;
 
-//Constructor for sending information to the Data Layer//
-
+        //Constructor for sending information to the Data Layer//
         NewThread(String p, String m) {
             path = p;
             message = m;
@@ -111,50 +100,31 @@ public class MobileConnection extends AppCompatActivity {
 
         public void run() {
 
-//Retrieve the connected devices, known as nodes//
-
+            //Retrieve the connected devices, known as nodes//
             Task<List<Node>> wearableList =
                     Wearable.getNodeClient(getApplicationContext()).getConnectedNodes();
             try {
-
                 List<Node> nodes = Tasks.await(wearableList);
                 for (Node node : nodes) {
                     Task<Integer> sendMessageTask =
-
-//Send the message//
-
-                            Wearable.getMessageClient(MobileConnection.this).sendMessage(node.getId(), path, message.getBytes());
-
+                        //Send the message//
+                        Wearable.getMessageClient(MobileConnection.this).sendMessage(node.getId(), path, message.getBytes());
                     try {
-
-//Block on a task and get the result synchronously//
-
+                        //Block on a task and get the result synchronously//
                         Integer result = Tasks.await(sendMessageTask);
                         sendmessage("I just sent the wearable a message " + sentMessageNumber++);
-
                         //if the Task fails, then…..//
-
                     } catch (ExecutionException exception) {
-
                         //TO DO: Handle the exception//
-
                     } catch (InterruptedException exception) {
-
                         //TO DO: Handle the exception//
-
                     }
-
                 }
-
             } catch (ExecutionException exception) {
-
                 //TO DO: Handle the exception//
-
             } catch (InterruptedException exception) {
-
                 //TO DO: Handle the exception//
             }
-
         }
     }
 }

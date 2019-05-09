@@ -25,6 +25,7 @@ public class MessageService extends WearableListenerService {
                 if ( o instanceof ArrayList ) {
                     ArrayList<List<Object>> list = (ArrayList<List<Object>>)o;
                     System.out.println(list);
+
                 } else {
                     System.out.println("----------------------------"+ o.getClass().getName() +"-------------------------------");
                 }
