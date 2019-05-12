@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="Chandana"
+                android:text="Account"
                 android:textColor="#fff"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -116,7 +116,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp"
+            android:onClick="onClick"
+            android:clickable="true">
 
             <ImageView
                 android:layout_width="36dp"
@@ -124,19 +126,22 @@
                 android:src="@drawable/ic_account_circle_black_24dp" />
 
             <TextView
+                android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="Profile"
-                android:textColor="@color/cardview_light_background"/>
+                android:textColor="@color/cardview_light_background" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp"
+            android:onClick="onClick"
+            android:clickable="true">
 
             <ImageView
                 android:layout_width="36dp"
@@ -144,19 +149,22 @@
                 android:src="@drawable/ic_settings_black_24dp" />
 
             <TextView
+                android:id="@+id/settingstext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="Settings"
-                android:textColor="@color/cardview_light_background"/>
+                android:textColor="@color/cardview_light_background" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp"
+            android:onClick="onClick"
+            android:clickable="true">
 
             <ImageView
                 android:layout_width="36dp"
@@ -164,12 +172,13 @@
                 android:src="@drawable/ic_data_usage_black_24dp" />
 
             <TextView
+                android:id="@+id/datausagetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="Data Usage"
-                android:textColor="@color/cardview_light_background"/>
+                android:textColor="@color/cardview_light_background" />
         </LinearLayout>
 
     </LinearLayout>
@@ -184,5 +193,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Log Out" />
+
+
 
 </LinearLayout>

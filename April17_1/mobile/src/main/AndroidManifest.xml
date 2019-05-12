@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogStatistics"></activity>
+        <activity android:name=".DatausagePage"></activity>
+        <activity android:name=".SettingsPage" />
+        <activity android:name=".ProfilePage" />
+        <activity android:name=".LogStatistics" />
         <activity android:name=".BottomNavigation" />
         <activity android:name=".SleepTimer" />
         <activity android:name=".ConnectionPage" />
