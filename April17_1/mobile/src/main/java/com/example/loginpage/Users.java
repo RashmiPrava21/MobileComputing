@@ -9,17 +9,19 @@ public class Users {
     private int highIntensity;
     private int lowIntensity;
     private int totalMovements;
+    List<String> time = new ArrayList<>();
 
     private ArrayList<List<Object>> userData = new ArrayList<List<Object>>();
 
     public Users(){}
 
-    public Users(String email_, ArrayList<List<Object>> userData_, int highIntensity_, int lowIntensity_, int totalMovements_){
+    public Users(String email_, ArrayList<List<Object>> userData_, int highIntensity_, int lowIntensity_, int totalMovements_, List<String> time_){
         this.email = email_;
         this.userData = userData_;
         this.highIntensity = highIntensity_;
         this.lowIntensity = lowIntensity_;
         this.totalMovements = totalMovements_;
+        this.time = time_;
     }
 
     public String getEmail() {
@@ -60,5 +62,13 @@ public class Users {
 
     public void setUserData(ArrayList<List<Object>> userData) {
         this.userData = userData;
+    }
+
+    public List<String> getTime() {
+        return time;
+    }
+
+    public void setTime(List<String> time) {
+        this.time = time;
     }
 }

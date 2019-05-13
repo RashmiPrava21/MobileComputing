@@ -28,6 +28,15 @@ public class MessageService extends WearableListenerService {
             int high_intensity = 0;
             int low_intensity = 0;
             long total_sleep_time;
+            Date date1;
+            Date date2;
+            long secondsInMilli = 1000;
+            long minutesInMilli = secondsInMilli * 60;
+            long hoursInMilli = minutesInMilli * 60;
+            long daysInMilli = hoursInMilli * 24;
+
+            List<String> time = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
 
             Toast.makeText(getApplicationContext(), "Data received from Watch", Toast.LENGTH_SHORT).show();
             try(ByteArrayInputStream bos = new ByteArrayInputStream(messageEvent.getData());
@@ -43,8 +52,9 @@ public class MessageService extends WearableListenerService {
                     DateFormat start_df = new SimpleDateFormat("dd:MM:yy:HH:mm:ss");
                     DateFormat end_df = new SimpleDateFormat("dd:MM:yy:HH:mm:ss");
 
-                    start_df = (DateFormat) list.get(0).get(0);
-                    Date date1 = start_df.parse((String) list.get(0).get(0));
+                    // start_df = (DateFormat) list.get(0).get(0);
+                    date1 = start_df.parse((String) list.get(0).get(0));
+                    date2 = start_df.parse((String) list.get(list.size()-1).get(0));
 
                     for (int i = 0; i < list.size(); i++) {
                         float temp_rms_value = (float) list.get(i).get(1);
@@ -55,16 +65,37 @@ public class MessageService extends WearableListenerService {
                                 low_intensity++;
                             }
                         }
-                        end_df = (DateFormat) list.get(i).get(0);
                     }
 
-                    // total_sleep_time = end_df - start_df;
+                    total_sleep_time = date2.getTime() - date1.getTime();
+
+                    long elapsedHours = total_sleep_time / hoursInMilli;
+                    total_sleep_time = total_sleep_time % hoursInMilli;
+
+                    long elapsedMinutes = total_sleep_time / minutesInMilli;
+                    total_sleep_time = total_sleep_time % minutesInMilli;
+
+                    long elapsedSeconds = total_sleep_time / secondsInMilli;
+
+                    System.out.printf(
+                            "%d:, %d:, %d:",
+                            elapsedHours, elapsedMinutes, elapsedSeconds);
+
+                    sb.append(elapsedHours);
+                    sb.append(":");
+                    sb.append(elapsedMinutes);
+                    sb.append(":");
+                    sb.append(elapsedSeconds);
+
+                    time.add(sb.toString());
+                    sb = new StringBuilder();
+
 
                     int total_movements = low_intensity + high_intensity;
 
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                    Users temp = new Users(userEmail, list, high_intensity, low_intensity, total_movements);
+                    Users temp = new Users(userEmail, list, high_intensity, low_intensity, total_movements, time);
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("UsersAvailable");
                     dbRef.child(userID).setValue(temp);
 
