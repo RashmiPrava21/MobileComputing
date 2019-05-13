@@ -6,16 +6,16 @@ import java.util.List;
 public class Users {
 
     private String email;
-    private int highIntensity;
-    private int lowIntensity;
-    private int totalMovements;
+    private String highIntensity;
+    private String lowIntensity;
+    private String totalMovements;
     List<String> time = new ArrayList<>();
 
     private ArrayList<List<Object>> userData = new ArrayList<List<Object>>();
 
     public Users(){}
 
-    public Users(String email_, ArrayList<List<Object>> userData_, int highIntensity_, int lowIntensity_, int totalMovements_, List<String> time_){
+    public Users(String email_, ArrayList<List<Object>> userData_, String highIntensity_, String lowIntensity_, String totalMovements_, List<String> time_){
         this.email = email_;
         this.userData = userData_;
         this.highIntensity = highIntensity_;
@@ -32,27 +32,27 @@ public class Users {
         this.email = email;
     }
 
-    public int getHighIntensity() {
+    public String getHighIntensity() {
         return highIntensity;
     }
 
-    public void setHighIntensity(int highIntensity) {
+    public void setHighIntensity(String highIntensity) {
         this.highIntensity = highIntensity;
     }
 
-    public int getLowIntensity() {
+    public String getLowIntensity() {
         return lowIntensity;
     }
 
-    public void setLowIntensity(int lowIntensity) {
+    public void setLowIntensity(String lowIntensity) {
         this.lowIntensity = lowIntensity;
     }
 
-    public int getTotalMovements() {
+    public String getTotalMovements() {
         return totalMovements;
     }
 
-    public void setTotalMovements(int totalMovements) {
+    public void setTotalMovements(String totalMovements) {
         this.totalMovements = totalMovements;
     }
 

@@ -58,10 +58,10 @@ public class MessageService extends WearableListenerService {
 
                     for (int i = 0; i < list.size(); i++) {
                         float temp_rms_value = (float) list.get(i).get(1);
-                        if (temp_rms_value >= 3.00) {
+                        if (temp_rms_value >= 2.00) {
                             high_intensity++;
                         } else {
-                            if (temp_rms_value >= 1.5 && temp_rms_value < 3.00){
+                            if (temp_rms_value >= 1.3 && temp_rms_value < 2.00){
                                 low_intensity++;
                             }
                         }
@@ -95,7 +95,7 @@ public class MessageService extends WearableListenerService {
 
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                    Users temp = new Users(userEmail, list, high_intensity, low_intensity, total_movements, time);
+                    Users temp = new Users(userEmail, list, Integer.toString(high_intensity), Integer.toString(low_intensity), Integer.toString(total_movements), time);
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("UsersAvailable");
                     dbRef.child(userID).setValue(temp);
 

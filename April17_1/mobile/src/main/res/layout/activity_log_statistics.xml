@@ -5,9 +5,41 @@
     android:orientation="vertical"
     tools:context=".LogStatistics" >
 
-    <Button
-        android:id="@+id/logbutton"
+    <EditText
+        android:id="@+id/totalSleep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Sleep" />
+
+    <EditText
+        android:id="@+id/totolMovements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="# of Movements"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/highIntensity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="High Intensity"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/lowIntensity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Low Intensity"
+        android:inputType="numberSigned" />
+
+    <Button
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Graph" />
 </LinearLayout>
